@@ -2,19 +2,15 @@ package jm.task.core.jdbc.util;
 
 import jm.task.core.jdbc.model.User;
 import org.hibernate.SessionFactory;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.Environment;
-import org.hibernate.service.ServiceRegistry;
+
 
 import java.sql.Connection;
-import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
-
-import static java.lang.Class.forName;
 
 public class Util {
     // реализуйте настройку соеденения с БД
@@ -31,10 +27,8 @@ public class Util {
         try {
             Class.forName(DRIVER);
             connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-            //System.out.println("Connection OK");
         } catch (SQLException|ClassNotFoundException ex) {
             ex.printStackTrace();
-            //System.out.println("Connection Error");
         }
         return connection;
     }
@@ -59,12 +53,6 @@ public class Util {
                 Configuration configuration = new Configuration().
                         setProperties(settings).
                         addAnnotatedClass(User.class);
-
-//                ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().
-//                        applySettings(configuration.getProperties()).
-//                        build();
-//
-//                sessionFactory = configuration.buildSessionFactory(serviceRegistry);
 
                 sessionFactory = configuration.buildSessionFactory();
             } catch (Exception e) {
